@@ -40,7 +40,9 @@ import js.lib.Promise;
 #end
 
 import kha.Assets;
-import kha.FastFloat;
 import kha.Blob;
+import kha.FastFloat;
+import kha.Image;
+import kha.input.KeyCode;
 
 #end
