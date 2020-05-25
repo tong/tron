@@ -1,3 +1,9 @@
+#if macro
+import haxe.macro.Context;
+import haxe.macro.Expr;
+using haxe.macro.ExprTools;
+#else
+
 import armory.renderpath.RenderPathCreator;
 import armory.system.Event;
 import armory.trait.internal.CanvasScript;
@@ -36,3 +42,5 @@ import js.lib.Promise;
 import kha.Assets;
 import kha.FastFloat;
 import kha.Blob;
+
+#end
