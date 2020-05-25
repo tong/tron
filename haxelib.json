@@ -1,0 +1,13 @@
+{
+	"name": "tron",
+	"url": "https://github.com/tong/tron",
+	"license": "MIT",
+	"classPath": "Sources",
+	"tags": [],
+	"description": "",
+	"releasenote": "See CHANGELOG",
+	"version": "0.0.0",
+	"contributors": ["tong"],
+	"dependencies": {
+	}
+}
