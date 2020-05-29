@@ -37,42 +37,6 @@ class Input {
 		mouse.endFrame();
 		for( gp in gamepads ) gp.endFrame();
 	}
-
-	public static function getAxisVertical() : Float {
-		var v = 0.0;
-		//TODO
-		/*
-		for( gp in gamepads ) {
-			//trace(gp.num,gp.connected);
-			if( gp.connected ) {
-				if( gp.stickLeft.moved ) {
-					v = gp.stickLeft.y;
-				}
-			}
-		}
-		*/
-		var gp = gamepads[0];
-		if( gp.connected ) {
-			v = gp.stickLeft.y;
-		}
-		if( keyboard.down( KeyCode.W ) ) v = 1.0;
-		else if( keyboard.down( KeyCode.S ) ) v = -1.0;
-
-		return v;
-	}
-
-	public static function getAxisHorizontal() : Float {
-		var v = 0.0;
-		//TODO
-		var gp = gamepads[0];
-		if( gp.connected ) {
-			v = gp.stickLeft.x;
-		}
-		if( keyboard.down( KeyCode.A ) ) v = -1.0;
-		else if( keyboard.down( KeyCode.D ) ) v = 1.0;
-
-		return v;
-	}
 }
 
 /*
@@ -109,6 +73,7 @@ class Keyboard {
 		}
 		endFrame();
 	}
+
 	public function endFrame() {
 		if( keysFrame.length > 0 ) {
 			for( c in keysFrame ) {
@@ -339,7 +304,6 @@ class Gamepad {
 	public inline function released( button : String ) : Bool return buttonsReleased[buttonIndex( button )];
 
 	function axisListener( axis : Int, value : Float ) {
-		//trace(axis,value);
 		switch axis {
 		case 2,5: //L2/R2
 			var trigger = (axis == 2) ? triggerL : triggerR;
