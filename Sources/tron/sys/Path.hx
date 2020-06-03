@@ -5,13 +5,13 @@ class Path {
 	#if kha_krom
 
 	#if krom_windows // no inline for plugin access
-	public static inline var sep = "\\";
+	public static inline var SEP = "\\";
 	#else
-	public static inline var sep = "/";
+	public static inline var SEP = "/";
 	#end
 
 	public static inline function data() : String {
-		return Krom.getFilesLocation() + Path.sep + Data.dataPath;
+		return Krom.getFilesLocation() + Path.SEP + Data.dataPath;
 	}
 
 	public static inline function isProtected() : Bool {
