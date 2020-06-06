@@ -31,7 +31,6 @@ import iron.object.SpeakerObject;
 import iron.object.Transform;
 import iron.object.Uniforms;
 import iron.system.Audio;
-import iron.system.Input;
 import iron.system.Time;
 import iron.system.Tween;
 
