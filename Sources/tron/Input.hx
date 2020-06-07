@@ -4,7 +4,7 @@ import kha.input.KeyCode;
 
 class Input {
 	
-	static var registered = false;
+	public static var registered(default,null) = false;
 	
 	public static var keyboard(default,null) : Keyboard;
 	public static var mouse(default,null) : Mouse;
