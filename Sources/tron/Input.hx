@@ -127,8 +127,14 @@ class Mouse {
 	public var middle(default,null) = new MouseButton();
 
 	public function new() {
-		kha.input.Mouse.get().notify(downListener, upListener, moveListener, wheelListener);
-		#if (kha_android || kha_ios)
+		var m = kha.input.Mouse.get();
+		m.notify( downListener, upListener, moveListener, wheelListener );
+		#if kha_html5
+		m.notifyOnLockChange(
+			() -> locked = m.isLocked(),
+			() -> {}
+		);
+		#elseif (kha_android || kha_ios)
 		var s = kha.input.Surface.get();
 		if( s != null ) s.notify( onTouchDown, onTouchUp, onTouchMove );
 		#end
@@ -192,7 +198,10 @@ class Mouse {
 	}
 
 	function moveListener( x : Int, y : Int, movementX : Int, movementY : Int ) {
-		if( lastX == -1.0 && lastY == -1.0 ) { lastX = x; lastY = y; } // First frame init
+		if( lastX == -1.0 && lastY == -1.0 ) {
+			lastX = x;
+			lastY = y;
+		} // First frame init
 		if( locked ) {
 			// Can be called multiple times per frame
 			this.movementX += movementX;
