@@ -4,6 +4,8 @@ import kha.audio1.AudioChannel;
 
 class Music {
 
+	public static var fileType = "ogg";
+
 	public static var track(default,null) : String;
 	public static var paused(default,null) = false;
 	
@@ -30,14 +32,17 @@ class Music {
 
 	static var channel : AudioChannel;
 
-	public static function play( track : String, stream = true, loop = false ) {
+	public static function play( track : String, ?volume : Float, stream = true, loop = false ) {
 		if( channel != null ) {
 			channel.stop();
 		}
+		if( volume != null ) Music.volume = volume;
 		Music.track = track;
-		Data.getSound( 'music_$track', s -> {
+		var path = 'music_$track';
+		if( track.extension() == "" ) path += '.$fileType';
+		Data.getSound( path, s -> {
 			channel = Audio.play( s, loop, stream );
-			channel.volume = volume;
+			channel.volume = Music.volume;
 		});
 	}
 
