@@ -3,7 +3,6 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 using haxe.macro.ExprTools;
 #else
-
 import armory.renderpath.RenderPathCreator;
 import armory.system.Event;
 import armory.trait.internal.CanvasScript;
@@ -34,14 +33,16 @@ import iron.system.Audio;
 import iron.system.Time;
 import iron.system.Tween;
 
-#if html5
-import js.lib.Promise;
-#end
-
 import kha.Assets;
 import kha.Blob;
 import kha.FastFloat;
 import kha.Image;
 import kha.input.KeyCode;
 
+#if html5
+import js.lib.Promise;
 #end
+
+using haxe.io.Path;
+
+#end //!macro
