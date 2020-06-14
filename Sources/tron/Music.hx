@@ -4,6 +4,7 @@ import kha.audio1.AudioChannel;
 
 class Music {
 
+	public static var filePrefix = "music_";
 	public static var fileType = "ogg";
 
 	public static var track(default,null) : String;
@@ -38,7 +39,7 @@ class Music {
 		}
 		if( volume != null ) Music.volume = volume;
 		Music.track = track;
-		var path = 'music_$track';
+		var path = '$filePrefix$track';
 		if( track.extension() == "" ) path += '.$fileType';
 		Data.getSound( path, s -> {
 			channel = Audio.play( s, loop, stream );
