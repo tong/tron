@@ -5,7 +5,7 @@ package tron;
 
 #if kha_krom
 
-enum abstract BackgroundColor(Int) to Int {
+private enum abstract BackgroundColor(Int) to Int {
     var black = 40;
     var red = 41;
     var green = 42;
@@ -25,7 +25,7 @@ enum abstract BackgroundColor(Int) to Int {
     var bright_white = 107;
 }
 
-enum abstract Color(Int) to Int {
+private enum abstract Color(Int) to Int {
     var black = 30;
     var red = 31;
     var green = 32;
@@ -96,11 +96,15 @@ class Log {
 		#end
 	}
 	
-	public static inline function info( o : Dynamic ) {
+	public static inline function info( v : Dynamic, posInfos = false ) {
 		#if kha_krom
-		trace( format(o,[Color.blue]) );
+		//TODO optional pos infos
+		//var m = posInfos ? haxe.Log.formatOutput( v, infos );
+		Krom.log( format( v, [Color.blue] ) );
+		//println();
+		//trace( format(o,[Color.blue]) );
 		#elseif kha_html5
-		console.info( Std.string(o) );
+		console.info( v );
 		#end
 	}
 
