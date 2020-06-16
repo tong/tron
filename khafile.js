@@ -1,3 +1,4 @@
+console.info("T   R   ⚫   Ͷ");
 var project = new Project('Tron');
 project.addDefine('tron');
 //project.addAssets('Assets/font/**', { notinlist: false });
