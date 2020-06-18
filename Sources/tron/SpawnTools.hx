@@ -36,7 +36,7 @@ class SpawnTools {
 		spawnObjectTree( obj, parent, null, done );
 	}
 
-	static function getObjectsCount( objects : Array<TObj>, discardNoSpawn = true ) : Int {
+	public static function getObjectsCount( objects : Array<TObj>, discardNoSpawn = true ) : Int {
 		if( objects == null ) return 0;
 		var result = objects.length;
 		for( o in objects ) {
