@@ -1,9 +1,6 @@
 package tron;
 
-#if macro
-#end
-
-#if kha_krom
+#if (kha_krom || macro)
 
 private enum abstract BackgroundColor(Int) to Int {
     var black = 40;
@@ -45,96 +42,71 @@ private enum abstract Color(Int) to Int {
     var bright_white = 97;
 }
 
-#elseif kha_html5
-import js.Browser.console;
 #end
 
 class Log {
 
-	/* macro public static inline function test( e : ExprOf<Dynamic>, extra : Array<Expr> ) : ExprOf<Void> {
-		var v = Std.string( e.getValue() );
-		//var a = [e.getValue()];
-		trace(Context.currentPos());
-		var pos : haxe.macro.Position = Context.currentPos();
-		trace(pos);
-		for( e in extra ) {
-			//v += ', '+Std.string( e.getValue() );
-		}
-		var info = {
-			fileName : "FFF", //pos.file ,
-			lineNumber : 0, 
-			className : "Test", 
-			methodName : "main", 
-			customParams : extra.map( e -> return e.getValue() )
-		};
-		var s = haxe.Log.formatOutput( v, info );
-		//return macro haxe.Log.trace( $e );
-		return macro haxe.Log.trace( $v{s} );
-	} */
-
 	public static inline function clear() {
-		#if kha_krom
-		trace( '\033c' );
+		#if macro
+		Sys.print( '\033c' );
+		#elseif kha_krom
+		Krom.log( '\033c' );
 		#elseif kha_html5
-		console.clear();
+		js.Browser.console.clear();
 		#end
 	}
 
-	public static inline function debug( o : Dynamic ) {
-		#if kha_krom
-		trace( o );
+	public static inline function debug( v : Dynamic ) {
+		#if macro
+		Sys.println( v );
+		#elseif kha_krom
+		Krom.log( v );
 		#elseif kha_html5
-		console.debug( Std.string(o) );
+		js.Browser.console.debug( v );
 		#end
 	}
 
-	public static inline function log( o : Dynamic ) {
-		#if kha_krom
-		trace( o );
+	public static inline function log( v : Dynamic ) {
+		#if macro
+		Sys.println( v );
+		#elseif kha_krom
+		Krom.log( v );
 		#elseif kha_html5
-		console.log( Std.string(o) );
+		js.Browser.console.log( v );
 		#end
 	}
 	
-	public static inline function info( v : Dynamic, posInfos = false ) {
-		#if kha_krom
-		//TODO optional pos infos
-		//var m = posInfos ? haxe.Log.formatOutput( v, infos );
+	public static inline function info( v : Dynamic ) {
+		#if macro
+		Sys.println( format( v, [Color.blue] ) );
+		#elseif kha_krom
 		Krom.log( format( v, [Color.blue] ) );
-		//println();
-		//trace( format(o,[Color.blue]) );
 		#elseif kha_html5
-		console.info( v );
+		js.Browser.console.info( v );
 		#end
 	}
 
-	public static inline function warn( o : Dynamic ) {
-		#if kha_krom
-		/*
-		var hxTrace = haxe.Log.trace;
-		haxe.Log.trace = function(v, inf) {
-			//var message = haxe.Log.formatOutput(v,infos);
-			Krom.log( haxe.Log.formatOutput(v,infos) );
-		}
-		trace( o);
-		*/
-		trace( format( o, [Color.magenta] ) );
-		//Krom.log( format( o, [Color.magenta] ) );
+	public static inline function warn( v : Dynamic ) {
+		#if macro
+		Sys.println( format( v, [Color.magenta] ) );
+		#elseif kha_krom
+		Krom.log( format( v, [Color.magenta] ) );
 		#elseif kha_html5
-		console.warn( Std.string(o) );
+		js.Browser.console.warn( v );
 		#end
 	}
 
-	public static inline function error( o : Dynamic ) {
-		#if kha_krom
-		trace( format(o,[BackgroundColor.red,Color.white]) );
+	public static inline function error( v : Dynamic ) {
+		#if macro
+		Sys.println( format( v, [BackgroundColor.red,Color.white] ) );
+		#elseif kha_krom
+		Krom.log( format( v, [BackgroundColor.red,Color.white] ) );
 		#elseif kha_html5
-		console.error( Std.string(o) );
+		js.Browser.console.error( v );
 		#end
-
 	}
 
-	#if kha_krom
+	#if (kha_krom || macro)
 
 	public static var noColors = false;
 
