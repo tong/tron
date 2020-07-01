@@ -44,7 +44,61 @@ private enum abstract Color(Int) to Int {
 
 #end
 
+private enum abstract Level(Int) to Int {
+	var Debug = 0;
+	var Log = 1;
+	var Info = 2;
+	var Warn = 3;
+	var Error = 4;
+	var None = 5;
+}
+
 class Log {
+
+	public static var level = Level.Info;
+	public static var time = true;
+	public static var timePrecision = 4;
+
+	#if (kha_krom || macro)
+	
+	public static var noColors = false;
+
+	static inline var CSI = '\x1B[';
+
+	static function format( v : String, ?ansi : Array<Int> ) : String {
+		var str = ''; 
+		if( time ) {
+			final precision = timePrecision;
+			final precisionMult = Math.pow( 10, precision );
+			final now = Std.int( Time.realTime()*precisionMult ) / precisionMult;
+			var nowStr = Std.string( now );
+			var parts = nowStr.split('.');
+			var len = parts[1].length;
+			if( len < precision ) {
+				for( i in 0...(precision-len) ) nowStr += '0';
+			}
+			str += ansify( '[$nowStr]', [BackgroundColor.black,Color.white] )+' ';
+		}
+		if( !noColors && ansi != null && ansi.length > 0 ) {
+			//str += '${CSI}${ansi.join(";")}m$v${CSI}0m';
+			str += ansify( v, ansi );
+		} else {
+			str += Std.string(v);
+		}
+		return str;
+	}
+
+	static function ansify( s : String, ?ansi : Array<Int> ) : String {
+		if( s == null )
+			return '';
+		if( !noColors && ansi != null && ansi.length > 0 )
+			return '${CSI}${ansi.join(";")}m$s${CSI}0m';
+		return s;
+	}
+
+	//static function print() {
+
+	#end
 
 	public static inline function clear() {
 		#if macro
@@ -57,6 +111,7 @@ class Log {
 	}
 
 	public static inline function debug( v : Dynamic ) {
+		if( cast(level,Int) > cast(Level.Debug,Int) ) return;
 		#if macro
 		Sys.println( v );
 		#elseif kha_krom
@@ -67,6 +122,7 @@ class Log {
 	}
 
 	public static inline function log( v : Dynamic ) {
+		if( cast(level,Int) > cast(Level.Log,Int) ) return;
 		#if macro
 		Sys.println( v );
 		#elseif kha_krom
@@ -77,6 +133,7 @@ class Log {
 	}
 	
 	public static inline function info( v : Dynamic ) {
+		if( cast(level,Int) > cast(Level.Info,Int) ) return;
 		#if macro
 		Sys.println( format( v, [Color.blue] ) );
 		#elseif kha_krom
@@ -87,6 +144,7 @@ class Log {
 	}
 
 	public static inline function warn( v : Dynamic ) {
+		if( cast(level,Int) > cast(Level.Warn,Int) ) return;
 		#if macro
 		Sys.println( format( v, [Color.magenta] ) );
 		#elseif kha_krom
@@ -95,8 +153,9 @@ class Log {
 		js.Browser.console.warn( v );
 		#end
 	}
-
+	
 	public static inline function error( v : Dynamic ) {
+		if( cast(level,Int) > cast(Level.Error,Int) ) return;
 		#if macro
 		Sys.println( format( v, [BackgroundColor.red,Color.white] ) );
 		#elseif kha_krom
@@ -105,21 +164,5 @@ class Log {
 		js.Browser.console.error( v );
 		#end
 	}
-
-	#if (kha_krom || macro)
-
-	public static var noColors = false;
-
-	static inline var CSI = '\x1B[';
-
-	static function format( v : String, ?ansi : Array<Int> ) : String {
-		//var time = '['+Time.realDelta+']';
-		//v = time + v;
-		if( noColors || ansi == null || ansi.length == 0 )
-			return v;
-		return '${CSI}${ansi.join(";")}m$v${CSI}0m';
-	}
-
-	#end
 
 }
