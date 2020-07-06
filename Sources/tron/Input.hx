@@ -12,7 +12,6 @@ class Input {
 
 	public static function init() {
 		if( !registered )  {
-			registered = true;
 			keyboard = new Keyboard();
 			mouse = new Mouse();
 			for( i in 0...4 ) {
@@ -23,6 +22,7 @@ class Input {
 			iron.App.notifyOnReset( reset );
 			//kha.input.Keyboard.get().notify( downListener, upListener, pressListener );
 			kha.System.notifyOnApplicationState( mouse.reset, null, null, null, null );
+			registered = true;
 		}
 	}
 
@@ -337,6 +337,7 @@ class Gamepad {
 	}
 	
 	function buttonListener( i : Int, value : Float ) {
+		trace(i,value);
 		buttonsFrame.push( i );
 		buttonsDown[i] = value;
 		if( value > 0 ) buttonsStarted[i] = true;
