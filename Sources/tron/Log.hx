@@ -67,6 +67,7 @@ class Log {
 
 	static function format( v : String, ?ansi : Array<Int> ) : String {
 		var str = ''; 
+		if( v == null ) str = '';
 		if( time ) {
 			final precision = timePrecision;
 			final precisionMult = Math.pow( 10, precision );
@@ -100,7 +101,7 @@ class Log {
 
 	#end
 
-	public static inline function clear() {
+	public static function clear() {
 		#if macro
 		Sys.print( '\033c' );
 		#elseif kha_krom
@@ -110,7 +111,7 @@ class Log {
 		#end
 	}
 
-	public static inline function debug( v : Dynamic ) {
+	public static function debug( v : Dynamic ) {
 		if( cast(level,Int) > cast(Level.Debug,Int) ) return;
 		#if macro
 		Sys.println( v );
@@ -121,7 +122,7 @@ class Log {
 		#end
 	}
 
-	public static inline function log( v : Dynamic ) {
+	public static function log( v : Dynamic ) {
 		if( cast(level,Int) > cast(Level.Log,Int) ) return;
 		#if macro
 		Sys.println( v );
@@ -132,7 +133,7 @@ class Log {
 		#end
 	}
 	
-	public static inline function info( v : Dynamic ) {
+	public static function info( v : Dynamic ) {
 		if( cast(level,Int) > cast(Level.Info,Int) ) return;
 		#if macro
 		Sys.println( format( v, [Color.blue] ) );
@@ -143,7 +144,7 @@ class Log {
 		#end
 	}
 
-	public static inline function warn( v : Dynamic ) {
+	public static function warn( v : Dynamic ) {
 		if( cast(level,Int) > cast(Level.Warn,Int) ) return;
 		#if macro
 		Sys.println( format( v, [Color.magenta] ) );
@@ -154,7 +155,7 @@ class Log {
 		#end
 	}
 	
-	public static inline function error( v : Dynamic ) {
+	public static function error( v : Dynamic ) {
 		if( cast(level,Int) > cast(Level.Error,Int) ) return;
 		#if macro
 		Sys.println( format( v, [BackgroundColor.red,Color.white] ) );
