@@ -71,7 +71,7 @@ class Log {
 		if( time ) {
 			final precision = timePrecision;
 			final precisionMult = Math.pow( 10, precision );
-			final now = Std.int( Time.realTime()*precisionMult ) / precisionMult;
+			final now = Std.int( #if macro Sys.time() #else Time.realTime() #end * precisionMult ) / precisionMult;
 			var nowStr = Std.string( now );
 			var parts = nowStr.split('.');
 			var len = parts[1].length;
