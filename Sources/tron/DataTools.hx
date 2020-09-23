@@ -1,6 +1,7 @@
 package tron;
 
 import iron.data.Data;
+import iron.data.MaterialData;
 
 class DataTools {
 
@@ -16,6 +17,12 @@ class DataTools {
 			} );
 		}
 		loadNext();
+	}
+
+	public static function loadMaterial( scene : String, name : String, done : haxe.ds.Vector<MaterialData>->Void ) {
+		Data.getMaterial( scene, name, (md:MaterialData) -> {
+			done( haxe.ds.Vector.fromData([md]) );
+		});
 	}
 
 }
