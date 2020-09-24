@@ -1,5 +1,6 @@
 package tron;
 
+import armory.trait.physics.bullet.PhysicsWorld;
 import armory.trait.physics.bullet.PhysicsWorld.Hit;
 import iron.math.RayCaster;
 
@@ -21,16 +22,15 @@ class PhysicsTools {
 		#if arm_physics
 		if( object == null || coords == null )
 			return null;
-		var physics = armory.trait.physics.PhysicsWorld.active;
 		var rb = object.getTrait( armory.trait.physics.RigidBody );
 		if( rb == null )
 			return null;
-		var b = physics.pickClosest( coords.x, coords.y );
+		var b = PhysicsWorld.active.pickClosest( coords.x, coords.y );
 		if( b == rb ) {
-			return physics.hitPointWorld.clone();
+			return PhysicsWorld.active.hitPointWorld.clone();
 		}
 		#else
-		trace( 'PickLocation requires arm_physics' );
+		trace( 'pickLocation requires arm_physics' );
 		#end
 		return null;
 	}
