@@ -1,10 +1,14 @@
 package tron;
 
+#if arm_bullet
 import armory.trait.physics.bullet.PhysicsWorld;
 import armory.trait.physics.bullet.PhysicsWorld.Hit;
 import iron.math.RayCaster;
+#end
 
 class PhysicsTools {
+	
+	#if arm_bullet
 
 	/**
 	 */
@@ -35,4 +39,6 @@ class PhysicsTools {
 		return null;
 	}
 
+	#end
+	
 }
