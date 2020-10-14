@@ -259,8 +259,10 @@ class Gamepad {
 
 	public static var buttonsPS = ["cross", "circle", "square", "triangle", "l1", "r1", "l2", "r2", "share", "options", "l3", "r3", "up", "down", "left", "right", "home", "touchpad"];
 	public static var buttonsXBOX = ["a", "b", "x", "y", "l1", "r1", "l2", "r2", "share", "options", "l3", "r3", "up", "down", "left", "right", "home", "touchpad"];
+	public static var buttonsXBOX360 = ["a","b","x","y","l1","r1","back","start","home","leftStick","rightStick","left","right","up","down"];
 	
 	public final num = 0;
+
 	public var buttons = buttonsPS;
 	public var connected(default,null) = false;
 	public var device(default,null) : kha.input.Gamepad;
@@ -268,6 +270,7 @@ class Gamepad {
 	public var stickRight(default,null) = new GamepadStick();
 	public var triggerL(default,null) = new GamepadTrigger();
 	public var triggerR(default,null) = new GamepadTrigger();
+	//public var dpad(default,null) = new GamepadDPad(); // TODO ?
 
 	var buttonsDown : Array<Float> = [];
 	var buttonsStarted : Array<Bool> = [];
@@ -337,7 +340,7 @@ class Gamepad {
 	}
 	
 	function buttonListener( i : Int, value : Float ) {
-		trace(i,value);
+		//trace(i,value);
 		buttonsFrame.push( i );
 		buttonsDown[i] = value;
 		if( value > 0 ) buttonsStarted[i] = true;
