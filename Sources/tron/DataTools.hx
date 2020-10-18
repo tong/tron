@@ -19,9 +19,9 @@ class DataTools {
 		loadNext();
 	}
 
-	public static function loadMaterial( scene : String, name : String, done : haxe.ds.Vector<MaterialData>->Void ) {
+	public static function loadMaterial( scene : String, name : String, ?done : haxe.ds.Vector<MaterialData>->Void ) {
 		Data.getMaterial( scene, name, (md:MaterialData) -> {
-			done( haxe.ds.Vector.fromData([md]) );
+			if( done != null ) done( haxe.ds.Vector.fromData([md]) );
 		});
 	}
 
