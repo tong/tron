@@ -15,4 +15,10 @@ class AnimationTools {
 		return null;
 	}
 
+	public static function getAnimation( obj : Object ) : BoneAnimation {
+		var anim = obj.animation;
+		if( anim == null ) anim = obj.children[0].animation;
+		return anim;
+	}
+
 }

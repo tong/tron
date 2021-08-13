@@ -1,3 +1,6 @@
 *.blend[0-9]
 /blender/
 /build*/
+#Tools/*/bin/
+Tools/
+

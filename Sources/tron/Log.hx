@@ -1,6 +1,8 @@
 package tron;
 
-#if (kha_krom || macro)
+import tron.log.Level;
+
+#if !kha_html5
 
 private enum abstract BackgroundColor(Int) to Int {
     var black = 40;
@@ -44,18 +46,9 @@ private enum abstract Color(Int) to Int {
 
 #end
 
-private enum abstract Level(Int) to Int {
-	var Debug = 0;
-	var Log = 1;
-	var Info = 2;
-	var Warn = 3;
-	var Error = 4;
-	var None = 5;
-}
-
 class Log {
 
-	public static var level = Level.Info;
+	public static var level : Int = tron.log.Level.Log;
 	public static var time = true;
 	public static var timePrecision = 4;
 
@@ -81,7 +74,6 @@ class Log {
 			str += ansify( '[$nowStr]', [BackgroundColor.black,Color.white] )+' ';
 		}
 		if( !noColors && ansi != null && ansi.length > 0 ) {
-			//str += '${CSI}${ansi.join(";")}m$v${CSI}0m';
 			str += ansify( v, ansi );
 		} else {
 			str += Std.string(v);
@@ -97,72 +89,70 @@ class Log {
 		return s;
 	}
 
-	//static function print() {
-
 	#end
 
-	public static function clear() {
+	public static inline function print( s : String ) {
 		#if macro
-		Sys.print( '\033c' );
+		Sys.print( s );
 		#elseif kha_krom
-		Krom.log( '\033c' );
+		Krom.log( s );
 		#elseif kha_html5
+		js.Browser.console.log(s);
+		#end
+	}
+
+	public static inline function clear() {
+		#if kha_html5
 		js.Browser.console.clear();
+		#else
+		print( '\033c' );
 		#end
 	}
 
 	public static function debug( v : Dynamic ) {
-		if( cast(level,Int) > cast(Level.Debug,Int) ) return;
-		#if macro
-		Sys.println( v );
-		#elseif kha_krom
-		Krom.log( v );
-		#elseif kha_html5
+		if( level > cast tron.log.Level.Debug ) return;
+		#if kha_html5
 		js.Browser.console.debug( v );
+		#else
+		print( format( v, [BackgroundColor.black,Color.white] ) );
 		#end
 	}
 
 	public static function log( v : Dynamic ) {
-		if( cast(level,Int) > cast(Level.Log,Int) ) return;
+		if( level > cast tron.log.Level.Log ) return;
 		#if macro
-		Sys.println( v );
+		Sys.println( format( v, [Color.white] ) );
 		#elseif kha_krom
-		Krom.log( v );
+		Krom.log( format( v, [Color.white] ) );
 		#elseif kha_html5
 		js.Browser.console.log( v );
 		#end
 	}
 	
 	public static function info( v : Dynamic ) {
-		if( cast(level,Int) > cast(Level.Info,Int) ) return;
-		#if macro
-		Sys.println( format( v, [Color.blue] ) );
-		#elseif kha_krom
-		Krom.log( format( v, [Color.blue] ) );
-		#elseif kha_html5
+		if( level > cast tron.log.Level.Info ) return;
+		#if kha_html5
 		js.Browser.console.info( v );
+		#else
+		print( format( v, [Color.blue] ) );
 		#end
 	}
 
 	public static function warn( v : Dynamic ) {
-		if( cast(level,Int) > cast(Level.Warn,Int) ) return;
-		#if macro
-		Sys.println( format( v, [Color.magenta] ) );
-		#elseif kha_krom
-		Krom.log( format( v, [Color.magenta] ) );
-		#elseif kha_html5
+		if( level > cast tron.log.Level.Warn ) return;
+		#if kha_html5
 		js.Browser.console.warn( v );
+		#else
+		print( format( v, [BackgroundColor.magenta,Color.white] ) );
 		#end
 	}
 	
 	public static function error( v : Dynamic ) {
-		if( cast(level,Int) > cast(Level.Error,Int) ) return;
-		#if macro
-		Sys.println( format( v, [BackgroundColor.red,Color.white] ) );
-		#elseif kha_krom
-		Krom.log( format( v, [BackgroundColor.red,Color.white] ) );
-		#elseif kha_html5
+		if( level > cast tron.log.Level.Error ) return;
+		#if kha_html5
 		js.Browser.console.error( v );
+		#else
+		print( format( v, [BackgroundColor.red,Color.bright_white] ) );
 		#end
 	}
 
