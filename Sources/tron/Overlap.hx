@@ -20,6 +20,15 @@ class Overlap {
 	}
 
 	public function update() {
+		final ol = armory.object.TransformExtension.overlap( objectA.transform, objectB.transform );
+		final r = {
+			overlap: ol,
+			enter: ol && !lastOverlap,
+			leave: !ol && lastOverlap
+		} 
+		lastOverlap = ol;
+		return r;
+		/*
 		final tA = objectA.transform;
 		final tB = objectB.transform;
 		lA.set( tA.worldx(), tA.worldy(), tA.worldz() );
@@ -36,6 +45,7 @@ class Overlap {
 		} 
 		lastOverlap = overlap;
 		return r;
+		*/
 	}
 
 }
