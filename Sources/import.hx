@@ -1,8 +1,13 @@
 #if macro
+import haxe.Json;
 import haxe.macro.Context;
 import haxe.macro.Expr;
+import sys.FileSystem;
+import sys.io.File;
+using haxe.io.Path;
 using haxe.macro.ExprTools;
 #else
+
 import armory.system.Event;
 import armory.trait.internal.CanvasScript;
 import armory.trait.physics.PhysicsWorld;
@@ -41,7 +46,5 @@ import kha.input.KeyCode;
 #if html5
 import js.lib.Promise;
 #end
-
-using haxe.io.Path;
 
 #end //!macro
