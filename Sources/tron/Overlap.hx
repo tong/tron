@@ -20,6 +20,8 @@ class Overlap {
 	}
 
 	public function update() {
+		if( objectA == null || objectB == null )
+			return { overlap: false, enter: false, leave: false };
 		final ol = armory.object.TransformExtension.overlap( objectA.transform, objectB.transform );
 		final r = {
 			overlap: ol,
