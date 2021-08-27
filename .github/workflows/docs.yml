@@ -1,0 +1,32 @@
+name: deploy-api-docs
+
+on:  
+  push:
+  workflow_dispatch:
+    inputs:
+      haxe-version:
+        description: 'Haxe version to use'
+        required: true
+        default: 4.2.3
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: ${{ github.event.inputs.haxe-version }}
+      - name: Setup
+        run: haxelib install dox
+      - name: Build documentation
+        run: |
+          haxe api.hxml
+          haxelib run dox -i ./ -o docs --title 'T   R   ⚫  Ͷ' -D themeColor 0x000000 -D textColor 0x000000 -D website 'https://gamma.disktree.net'
+      - name: Deploy gh-pages
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: docs
