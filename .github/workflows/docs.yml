@@ -19,6 +19,7 @@ jobs:
           haxe api.hxml
           git clone --recursive https://github.com/armory3d/armsdk.git
           export ARMORY_SDK=$(readlink -f armsdk)
+          echo $ARMORY_SDK
           haxelib run dox -i ./ -o docs --title 'T   R   ⚫  Ͷ' -D themeColor 0x000000 -D textColor 0x000000 -D website 'https://gamma.disktree.net'
       - name: Deploy gh-pages
         uses: JamesIves/github-pages-deploy-action@4.1.5
