@@ -2,6 +2,8 @@ package tron;
 
 import iron.data.SceneFormat;
 
+using haxe.io.Path;
+
 class SpawnTools {
 	
 	/*
@@ -23,10 +25,18 @@ class SpawnTools {
 	*/
 
 	/**
-	 * Spawn object tree from another scene.
+	 * Spawn object tree from scene.
 	 */
 	public static inline function spawnObjectFromScene( sceneName : String, name : String, ?parent : Object, done : Object->Void, ?spawnChildren : Bool ) {
 		Data.getSceneRaw( sceneName, raw -> spawnObject( raw, name, parent, done, spawnChildren ) );
+	}
+
+	/**
+	 * Spawn object tree from linked proxy scene.
+	 */
+	public static inline function spawnObjectFromProxyScene( blendFile : String, sceneName : String, name : String, ?parent : Object, done : Object->Void, ?spawnChildren : Bool ) {
+		// blendFile = blendFile.withoutExtension();
+		Data.getSceneRaw( sceneName, raw -> spawnObject( raw, '${name}_$blendFile.blend', parent, done, spawnChildren ) );
 	}
 	
 	/**
