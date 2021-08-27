@@ -1,6 +1,7 @@
 *.blend[0-9]
 /blender/
 /build*/
-#Tools/*/bin/
+docs/
 Tools/
 .vscode/
+api.xml
