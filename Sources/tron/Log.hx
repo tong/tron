@@ -52,7 +52,7 @@ class Log {
 	public static var time = true;
 	public static var timePrecision = 4;
 
-	#if (kha_krom || macro)
+	#if (kha_hl || kha_krom || macro)
 	
 	public static var noColors = false;
 
@@ -92,7 +92,7 @@ class Log {
 	#end
 
 	public static inline function print( s : String ) {
-		#if macro
+		#if (kha_hl || macro)
 		Sys.print( s );
 		#elseif kha_krom
 		Krom.log( s );

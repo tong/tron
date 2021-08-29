@@ -34,9 +34,9 @@ class SpawnTools {
 	/**
 	 * Spawn object tree from linked proxy scene.
 	 */
-	public static inline function spawnObjectFromProxyScene( blendFile : String, sceneName : String, name : String, ?parent : Object, done : Object->Void, ?spawnChildren : Bool ) {
+	public static inline function spawnObjectFromProxyScene( blendFile : String, sceneName : String, objectName : String, ?parent : Object, done : Object->Void, ?spawnChildren : Bool ) {
 		// blendFile = blendFile.withoutExtension();
-		Data.getSceneRaw( sceneName, raw -> spawnObject( raw, '${name}_$blendFile.blend', parent, done, spawnChildren ) );
+		Data.getSceneRaw( sceneName, raw -> spawnObject( raw, '${objectName}_$blendFile.blend', parent, done, spawnChildren ) );
 	}
 	
 	/**

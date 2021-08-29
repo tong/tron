@@ -1,6 +1,7 @@
 package tron;
 
 import kha.audio1.AudioChannel;
+using haxe.io.Path;
 
 class Music {
 
@@ -41,9 +42,15 @@ class Music {
 		Music.track = track;
 		var path = '$filePrefix$track';
 		if( track.extension() == "" ) path += '.$fileType';
+		tron.Log.debug( 'Music load: $path' );
 		Data.getSound( path, s -> {
-			channel = Audio.play( s, loop, stream );
-			channel.volume = Music.volume;
+			if( s == null ) {
+				tron.Log.warn( 'Music [$path] not found' );
+			} else {
+				tron.Log.debug( 'Music play: $path' );
+				channel = Audio.play( s, loop, stream );
+				channel.volume = Music.volume;
+			}
 		});
 	}
 
