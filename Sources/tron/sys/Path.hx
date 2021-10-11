@@ -4,7 +4,7 @@ class Path {
 
 	#if kha_krom
 
-	#if krom_windows // no inline for plugin access
+	#if krom_windows
 	public static inline var SEP = "\\";
 	#else
 	public static inline var SEP = "/";

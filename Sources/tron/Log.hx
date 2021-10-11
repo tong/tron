@@ -1,54 +1,22 @@
 package tron;
 
-import tron.log.Level;
+// import tron.log.Level;
 
-#if !kha_html5
-
-private enum abstract BackgroundColor(Int) to Int {
-    var black = 40;
-    var red = 41;
-    var green = 42;
-    var yellow = 43;
-    var blue = 44;
-    var magenta = 45;
-    var cyan = 46;
-    var white = 47;
-    var default_ = 49;
-    var bright_black = 100;
-    var bright_red = 101;
-    var bright_green = 102;
-    var bright_yellow = 103;
-    var bright_blue = 104;
-    var bright_magenta = 105;
-    var bright_cyan = 106;
-    var bright_white = 107;
+/*
+enum abstract LogLevel(Int) to Int {
+	var All = 0;
+	var Debug = 1;
+	var Info = 2;
+	var Warn = 3;
+	var Error = 4;
+	public static inline function gt(a:Int,b:Int) return a > b;
+	public static inline function lt(a:Int,b:Int) return a < b;
 }
-
-private enum abstract Color(Int) to Int {
-    var black = 30;
-    var red = 31;
-    var green = 32;
-    var yellow = 33;
-    var blue = 34;
-    var magenta = 35;
-    var cyan = 36;
-    var white = 37;
-    var default_ = 39;
-    var bright_black = 90;
-    var bright_red = 91;
-    var bright_green = 92;
-    var bright_yellow = 93;
-    var bright_blue = 94;
-    var bright_magenta = 95;
-    var bright_cyan = 96;
-    var bright_white = 97;
-}
-
-#end
+*/
 
 class Log {
 
-	public static var level : Int = tron.log.Level.Log;
+	//public static var level : LogLevel = LogLevel.All;
 	public static var time = true;
 	public static var timePrecision = 4;
 
@@ -71,7 +39,7 @@ class Log {
 			if( len < precision ) {
 				for( i in 0...(precision-len) ) nowStr += '0';
 			}
-			str += ansify( '[$nowStr]', [BackgroundColor.black,Color.white] )+' ';
+			str += ansify( '[$nowStr]', [40,37] )+' ';
 		}
 		if( !noColors && ansi != null && ansi.length > 0 ) {
 			str += ansify( v, ansi );
@@ -110,49 +78,52 @@ class Log {
 	}
 
 	public static function debug( v : Dynamic ) {
-		if( level > cast tron.log.Level.Debug ) return;
+		// if( LogLevel.lt( level, LogLevel.Debug ) ) {
+		// 	return;
+		// }
+		// if( tron.Log.level > LogLevel.Debug ) return;
 		#if kha_html5
 		js.Browser.console.debug( v );
 		#else
-		print( format( v, [BackgroundColor.black,Color.white] ) );
+		print( format( v, [40,37] ) );
 		#end
 	}
 
 	public static function log( v : Dynamic ) {
-		if( level > cast tron.log.Level.Log ) return;
+		// if( level >= LogLevel.All ) return;
 		#if macro
-		Sys.println( format( v, [Color.white] ) );
+		Sys.println( format( v, [37] ) );
 		#elseif kha_krom
-		Krom.log( format( v, [Color.white] ) );
+		Krom.log( format( v, [37] ) );
 		#elseif kha_html5
 		js.Browser.console.log( v );
 		#end
 	}
 	
 	public static function info( v : Dynamic ) {
-		if( level > cast tron.log.Level.Info ) return;
+		// if( tron.Log.level > LogLevel.Info ) return;
 		#if kha_html5
 		js.Browser.console.info( v );
 		#else
-		print( format( v, [Color.blue] ) );
+		print( format( v, [44] ) );
 		#end
 	}
 
 	public static function warn( v : Dynamic ) {
-		if( level > cast tron.log.Level.Warn ) return;
+		// if( level > LogLevel.Warn ) return;
 		#if kha_html5
 		js.Browser.console.warn( v );
 		#else
-		print( format( v, [BackgroundColor.magenta,Color.white] ) );
+		print( format( v, [40,35] ) );
 		#end
 	}
 	
 	public static function error( v : Dynamic ) {
-		if( level > cast tron.log.Level.Error ) return;
+		// if( level > LogLevel.Error ) return;
 		#if kha_html5
 		js.Browser.console.error( v );
 		#else
-		print( format( v, [BackgroundColor.red,Color.bright_white] ) );
+		print( format( v, [41,107] ) );
 		#end
 	}
 
