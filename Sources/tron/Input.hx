@@ -8,6 +8,8 @@ import tron.input.Mouse;
 class Input {
 	
 	public static var initialized(default,null) = false;
+	public static var occupied = false;
+
 	public static var gamepads(default,null) : Array<Gamepad> = [];
 	public static var keyboard(default,null) : Keyboard;
 	public static var mouse(default,null) : Mouse;
@@ -38,6 +40,7 @@ class Input {
 	}
 
 	public static function reset() {
+		occupied = false;
 		keyboard.reset();
 		mouse.reset();
 		for( gp in gamepads ) gp.reset();
