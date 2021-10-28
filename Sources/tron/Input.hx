@@ -51,4 +51,10 @@ class Input {
 		mouse.endFrame();
 		for( gp in gamepads ) gp.endFrame();
 	}
+
+	// iron compat
+	public static inline function getKeyboard() return keyboard;
+	public static inline function getGamepads() return gamepads;
+	public static inline function getMouse() return mouse;
+	
 }
