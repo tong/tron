@@ -14,8 +14,24 @@ class MathTools {
 	*/
 	public static inline var PHI = 1.618033988749895;
 
+	public static inline function abs( f : Float ) : Float {
+		return f < 0 ? -f : f;
+	}
+
 	public static inline function degToRad( deg : Float ) : Float {
 		return deg * 0.0174532924;
+	}
+
+	public static inline function iabs( i : Int ) : Int {
+		return i < 0 ? -i : i;
+	}
+
+	public static inline function imax( a : Int, b : Int ) : Int {
+		return a < b ? b : a;
+	}
+
+	public static inline function imin( a : Int, b : Int ) : Int {
+		return a > b ? b : a;
 	}
 
 	public static inline function radToDeg( rad : Float ) : Float {
@@ -48,7 +64,4 @@ class MathTools {
 		return std.Math.ffloor(v * exp + .49999) * neg / exp;
 	}
 	*/
-
-
-
 }
